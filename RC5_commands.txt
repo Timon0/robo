@@ -1,0 +1,9 @@
+Forward: 80
+Backward: 81
+Right: 85
+Left: 86
+Stop: 87
+Go: 53
+Plus: 16
+Minus: 17
+Zahlen: Zahlen
