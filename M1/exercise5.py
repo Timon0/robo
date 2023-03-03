@@ -13,7 +13,7 @@ turn_right = 2
 current_position = 0
 
 turn_directions = [1, 1, 2, 2, 2, 2, 2]
-turn_radius = [duration_90_degree,duration_90_degree,3*duration_45_degree,duration_90_degree,duration_90_degree-100,3*duration_45_degree,3*duration_45_degree-150]
+turn_radius = [duration_90_degree,duration_90_degree,3*duration_45_degree,duration_90_degree,duration_90_degree-50,3*duration_45_degree,3*duration_45_degree-100]
 drive_durations = [drive_duration,drive_duration,drive_duration,drive_short,drive_short,drive_long,drive_duration,drive_long]
 
 def turn_left(turn_duration):
