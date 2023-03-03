@@ -1,4 +1,4 @@
-speed = 300
+speed = 500
 in_dark_zone = False
 measuring = False
 started = False
