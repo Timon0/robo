@@ -50,3 +50,8 @@ def time_for_circle(r, v, degrees=360, error_full_circle=0.3):
     """
     percentage_of_circle = degrees / 360
     return (time_for_distance(2 * r * math.pi, v) + error_full_circle) * percentage_of_circle
+
+def time_for_spin(speed, deg, error=0.15):
+        percentage = deg / 360
+        dist = math.floor((301 / 360) * deg)
+        return (dist / speed) - (percentage * error)
