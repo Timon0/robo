@@ -29,16 +29,16 @@ class Thymio:
         return self.mms_to_thymio(v_inner), self.mms_to_thymio(v_outer)
 
     @staticmethod
-    def time_for_distance(d: int, v: float):
+    def time_for_distance(d: float, v: float):
         """
         Calculate the time for driving a certain distance at a constant velocity.
 
         :param d: distance
         :param v: velocity in mm/s
-        :return: velocity for each wheel
+        :return: time
         """
 
-        return math.floor(d / v)
+        return d / v
 
     @staticmethod
     def time_for_circle(self, r, v, degrees=360, error_full_circle=0.3):
@@ -53,3 +53,9 @@ class Thymio:
         """
         percentage_of_circle = degrees/360
         return (self.time_for_distance(2 * r * math.pi, v) + error_full_circle) * percentage_of_circle
+    
+    @staticmethod
+    def time_for_spin(speed, deg, error=0.15):
+        percentage = deg / 360
+        dist = math.floor((301 / 360) * deg)
+        return (dist / speed) - (percentage * error)

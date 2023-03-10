@@ -1,11 +1,11 @@
-duration_90_degree = 1200
+duration_90_degree = 1176
 duration_45_degree = duration_90_degree // 2
 drive_duration = 1200
 drive_short = 850
 drive_long = 1700
 
 default_speed = 330
-default_turn_speed = 200
+default_turn_speed = 201
 
 turn_left = 1
 turn_right = 2
