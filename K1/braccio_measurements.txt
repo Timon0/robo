@@ -1,0 +1,12 @@
+j0 = base
+j1 = shoulder
+j2 = elbow
+j3 = v - wrist
+j4 = wrist
+
+
+j0z = 3 mm
+j1z = 71 mm
+j2z = 126 mm
+j3z = 124 mm
+j4z = 197 mm
