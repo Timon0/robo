@@ -23,23 +23,50 @@ def forward_kinematic_braccio(joints):
     ''' param: joints: current position of all the joints of the braccio '''
     ''' return: current position'''
 
-    result = np.array([[1,0,0,0],[0,1,0,0], [0,0,1,0], [0,0,0,1]])
-    for i, joint in enumerate(joints):
-        trans = translation(translationen[i])
-        rot = rotate_z(90 - joint)
-        if i > 0 and i < 5:
-            rot = rotate_y(90 -joint)
-        result = result @ trans @ rot
+    result = np.eye(4)
+    
+    ## initial translation
+    result = result @ translation([281, 0, 3])
+    
+    ## Joint 0
+    result = result @ rotate_z(90 - joints[0]) @ translation([0, 0, 71]) 
+    
+    ## Joint 1
+    result = result @ rotate_y(90 - joints[1]) @ translation([0, 0, 126]) 
+    
+    ## Joint 2
+    result = result @ rotate_y(90 - joints[2]) @ translation([0, 0, 124]) 
+    
+    ## Joint 3
+    result = result @ rotate_y(90 - joints[3]) @ translation([0, 0, 60])
 
+    ## Joint 4
+    result = result @ rotate_z(90 - joints[4]) @ translation([0, 0, 134]) 
+    
     return result
 
 def translation(trans):
-    return np.array([[1,0,0,trans[0]], [0,1,0,trans[1]],[0,0,1,trans[2]], [0,0,0,1]])
+    return np.array([
+        [1,0,0,trans[0]],
+        [0,1,0,trans[1]],
+        [0,0,1,trans[2]],
+        [0,0,0,1]
+    ])
 
 def rotate_z(theta):
     rad = radians(theta)
-    return np.array([[cos(rad), -sin(rad), 0, 0], [sin(rad), cos(rad), 0, 0],[0,0,1,0], [0,0,0,1]])
+    return np.array([
+        [cos(rad), -sin(rad), 0, 0],
+        [sin(rad), cos(rad), 0, 0],
+        [0,0,1,0],
+        [0,0,0,1]
+    ])
 
 def rotate_y(theta):
     rad = radians(theta)
-    return np.array([[cos(rad),0, sin(rad), 0],[0,1,0,0], [-sin(rad),0, cos(rad), 0], [0,0,0,1]])
+    return np.array([
+        [cos(rad),0, sin(rad), 0],
+        [0,1,0,0],
+        [-sin(rad),0, cos(rad), 0],
+        [0,0,0,1]
+    ])
