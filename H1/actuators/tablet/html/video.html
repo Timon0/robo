@@ -1,0 +1,47 @@
+<!DOCTYPE html>
+<html>
+<title>jrbot Testat - Video</title>
+<meta name="viewport" content="width=1280, user-scalable=no" />
+<link rel="stylesheet" href="style/w3.css">
+
+<body>
+	<div class="w3-container">
+		<div class="w3-center">
+			<video controls autoplay muted loop id="video">
+				<source src="rain.mp4" type="video/mp4">
+				Your browser does not support HTML video.
+			</video>
+		</div>
+
+
+		<p class="w3-center">
+			<a class="w3-btn w3-black close big" href="index.html">Go back!</a>
+		</p>
+	</div>
+</body>
+<style>
+	body {
+		padding-top: 35vh;
+	}
+
+	#video {
+		position: fixed;
+		right: 0;
+		bottom: 0;
+		min-width: 100%;
+		min-height: 100%;
+	}
+
+	.close {
+		position: absolute;
+		top: 5vh;
+		left: 5vh;
+	}
+
+	.big {
+		font-size: 2em;
+	}
+
+</style>
+
+</html>
