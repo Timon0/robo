@@ -41,7 +41,7 @@ class FileTransfer():
 
 if __name__ == "__main__":
 
-    config = PepperConfiguration(PepperNames.Ale)
+    config = PepperConfiguration(PepperNames.Pale)
     robot = Robot(config)
     camera = Camera(robot)
 
@@ -53,7 +53,7 @@ if __name__ == "__main__":
 
     # copy file to local path
     robot.ALTextToSpeech.say("transfer picture from remote to local")
-    local = "C:\\work\\"+file_name
+    local = "C:\\Users\\timon\\Documents\\hslu\\06\\ROBO\\Pepper\\"+file_name
     remote = remote_folder_path + file_name
     file_transfer = FileTransfer(robot)
     file_transfer.get(remote, local)

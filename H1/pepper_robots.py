@@ -132,7 +132,7 @@ class PepperConfiguration(object):
 
 class Robot(object):
 
-    def __init__(self, configuration, reset = False):
+    def __init__(self, configuration, reset = True):
         self.configuration = configuration
         self.connection_url = "tcp://" + configuration.IpPort
         self.app = qi.Application(["OurProject", "--qi-url=" + self.connection_url])
