@@ -56,7 +56,7 @@ class ImageRecognition:
 
         obj = 'No object found'
         parent = 'No parent available'
-        if response.status_code == 200:
+        if response.status_code == 200 and len(response.json()['objects']) > 0:
             rand_index = random.randrange(len(response.json()['objects']))
             object_found = response.json()['objects'][rand_index]
             obj = object_found['object']
