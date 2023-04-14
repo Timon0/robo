@@ -1,5 +1,6 @@
 import requests
 import json
+import random
 
 
 class ImageRecognition:
@@ -44,3 +45,23 @@ class ImageRecognition:
             description = response.json()['description']['captions'][0]['text']
 
         return description
+
+    def get_single_object(self, image_data):
+        url = self.__endpoint + '/vision/v3.2/detect?model-version' + self.__model_version
+        headers = {
+            'Ocp-Apim-Subscription-Key': self.__subscription_key,
+            'Content-Type': 'application/octet-stream'
+        }
+        response = requests.post(url, headers=headers, data=image_data)
+
+        obj = 'No object found'
+        parent = 'No parent available'
+        if response.status_code == 200:
+            rand_index = random.randrange(len(response.json()['objects']))
+            object_found = response.json()['objects'][rand_index]
+            obj = object_found['object']
+            while 'parent' in object_found:
+                parent = object_found['parent']['object']
+                object_found = object_found['parent']
+
+        return obj, parent
