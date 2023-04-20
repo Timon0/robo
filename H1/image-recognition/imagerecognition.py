@@ -1,6 +1,8 @@
 import requests
 import json
 import random
+from PIL import Image
+import io
 
 
 class ImageRecognition:
@@ -45,6 +47,27 @@ class ImageRecognition:
             description = response.json()['description']['captions'][0]['text']
 
         return description
+
+    def get_object_from_selection(self, image_paths):
+        objects = []
+        for path in image_paths:
+            image = Image.open(path)
+            img_width, img_height = image.size
+
+            # [upper left, upper right, lower left, lower right]
+            tiles = [image.crop((0, 0, img_width // 2, img_height // 2)),
+                     image.crop((img_width // 2, 0, img_width, img_height // 2)),
+                     image.crop((0, img_height // 2, img_width // 2, img_height)),
+                     image.crop((img_width // 2, img_height // 2, img_width, img_height))]
+
+            for i, tile in enumerate(tiles):
+                img_byte_arr = io.BytesIO()
+                tile.save(img_byte_arr, format='PNG')
+                img_byte_arr = img_byte_arr.getvalue()
+                found = self.get_objects(img_byte_arr)
+                objects.extend(found)
+
+        return random.choice(objects)
 
     def get_single_object(self, image_data):
         url = self.__endpoint + '/vision/v3.2/detect?model-version' + self.__model_version
