@@ -26,11 +26,11 @@ class ImageRecognition:
         if response.status_code == 200:
             for obj in response.json()['objects']:
                 obj_found = obj['object']
-                parent = 'No parent found'
+                parent = None
                 while 'parent' in obj:
                     parent = obj['parent']['object']
                     obj = obj['parent']
-                objects.append([obj_found, parent])
+                objects.append((obj_found, parent))
 
         return objects
 
