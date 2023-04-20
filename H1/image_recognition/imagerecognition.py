@@ -10,7 +10,7 @@ class ImageRecognition:
     __model_version = 'latest'
 
     def __init__(self):
-        with open("../config/config.json", "r") as jsonfile:
+        with open("./config/config.json", "r") as jsonfile:
             data = json.load(jsonfile)
             self.__subscription_key = data['imagerecognition']['subscription_key']
 

@@ -9,9 +9,6 @@ class Tablet:
         self.__al_tablet_service = robot.session.service("ALTabletService")
         pass
 
-    def close(self):
-        pass
-
     def show_image(self, file):
         self.__al_tablet_service.showImageNoCache("http://198.18.0.1/apps/" + file)
 
