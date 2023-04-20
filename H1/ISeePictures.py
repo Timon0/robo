@@ -21,7 +21,7 @@ class ISeePictures:
         picture_locations = []
 
         for head_yaw_angle in self.__head_yaw_angles:
-            # move the head to the right
+            # move the head into position
             self.__robot.ALMotion.setAngles('HeadPitch', 5 * almath.TO_RAD, fractionMaxSpeed=0.3)
             self.__robot.ALMotion.setAngles('HeadYaw', head_yaw_angle * almath.TO_RAD, fractionMaxSpeed=0.3)
             time.sleep(2)

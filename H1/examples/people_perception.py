@@ -1,8 +1,8 @@
 from pepper_robots import PepperConfiguration, Robot, PepperNames
 import time
 
-config = PepperConfiguration(PepperNames.Amber)
-pepper = Robot(config)
+config = PepperConfiguration(PepperNames.Pale)
+pepper = Robot(config, reset=False)
 
 
 # Pepper triggers some events when it detects people
