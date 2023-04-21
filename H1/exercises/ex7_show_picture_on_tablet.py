@@ -1,17 +1,21 @@
 import time
-
 from camera import Camera
 from pepper_robots import Robot, PepperConfiguration, PepperNames
 from tablet import Tablet
 from file_transfer import FileTransfer
 
+
 config = PepperConfiguration(PepperNames.Pale)
 robot = Robot(config)
 camera = Camera(robot)
 
+# move it up and down
+#robot.ALMotion.setAngles('HeadPitch', 20 * almath.TO_RAD, fractionMaxSpeed=0.2)
+#time.sleep(2)
+
 # take a picture
 remote_folder_path = "/opt/aldebaran/www/apps/"
-file_name = "my_picture_14_04_2023-2.jpg"
+file_name = "i_see.jpg"
 camera.take_picture(remote_folder_path, file_name)
 
 # show image on tablet

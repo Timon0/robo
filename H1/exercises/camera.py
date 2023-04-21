@@ -4,7 +4,7 @@ import vision_definitions
 class Camera:
 
     __camera_id = vision_definitions.kTopCamera
-    __resolution = vision_definitions.kVGA  # 640x480px
+    __resolution = vision_definitions.k4VGA
     __picture_format = "jpg"
 
     def __init__(self, robot):

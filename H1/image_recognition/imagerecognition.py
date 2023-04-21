@@ -1,6 +1,8 @@
 import requests
 import json
 import random
+from PIL import Image
+import io
 
 
 class ImageRecognition:
@@ -8,7 +10,7 @@ class ImageRecognition:
     __model_version = 'latest'
 
     def __init__(self):
-        with open("../config/config.json", "r") as jsonfile:
+        with open("./config/config.json", "r") as jsonfile:
             data = json.load(jsonfile)
             self.__subscription_key = data['imagerecognition']['subscription_key']
 
@@ -23,7 +25,12 @@ class ImageRecognition:
 
         if response.status_code == 200:
             for obj in response.json()['objects']:
-                objects.append(obj['object'])
+                obj_found = obj['object']
+                parent = None
+                while 'parent' in obj:
+                    parent = obj['parent']['object']
+                    obj = obj['parent']
+                objects.append((obj_found, parent))
 
         return objects
 
@@ -46,6 +53,27 @@ class ImageRecognition:
 
         return description
 
+    def get_object_from_selection(self, image_paths):
+        objects = []
+        for path in image_paths:
+            image = Image.open(path)
+            img_width, img_height = image.size
+
+            # [upper left, upper right, lower left, lower right]
+            tiles = [image.crop((0, 0, img_width // 2, img_height // 2)),
+                     image.crop((img_width // 2, 0, img_width, img_height // 2)),
+                     image.crop((0, img_height // 2, img_width // 2, img_height)),
+                     image.crop((img_width // 2, img_height // 2, img_width, img_height))]
+
+            for i, tile in enumerate(tiles):
+                img_byte_arr = io.BytesIO()
+                tile.save(img_byte_arr, format='PNG')
+                img_byte_arr = img_byte_arr.getvalue()
+                found = self.get_objects(img_byte_arr)
+                objects.extend(found)
+
+        return random.choice(objects)
+
     def get_single_object(self, image_data):
         url = self.__endpoint + '/vision/v3.2/detect?model-version' + self.__model_version
         headers = {
@@ -56,7 +84,7 @@ class ImageRecognition:
 
         obj = 'No object found'
         parent = 'No parent available'
-        if response.status_code == 200:
+        if response.status_code == 200 and len(response.json()['objects']) > 0:
             rand_index = random.randrange(len(response.json()['objects']))
             object_found = response.json()['objects'][rand_index]
             obj = object_found['object']
