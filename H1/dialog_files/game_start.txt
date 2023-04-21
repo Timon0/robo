@@ -1,8 +1,7 @@
-topic: ~greetings
+topic: ~start_game()
+
 language: enu
 
-u: (Hello Pale how are you today) Hello human, I am fine thank you and you?
-u: ({"Good morning"} {Pale} did you sleep * well) No damn! You forgot to switch me off!
-proposal: human, are you going well ?
-   u1: (yes) I'm so happy!
-   u1: (no) I'm so sad
+proposal: Hello, are you ready to play I spy?
+   u1: (yes) $start=1 Alright let's play!
+   u1: (no) $start=0 Well next time I guess
