@@ -29,12 +29,12 @@ if started:
     selected_object, selected_object_parent = image_recognition.get_object_from_selection(picture_locations)
 
 # todo: guessing dialog
-
+    game.play(selected_object, selected_object_parent)
 # todo: maybe add hint if parent of object is available
 
 
 # todo: want to play again?
 
-print(picture_locations)
-print(selected_object)
-print(selected_object_parent)
+    print(picture_locations)
+    print(selected_object)
+    print(selected_object_parent)

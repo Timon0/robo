@@ -6,7 +6,7 @@ class Game():
     def __init__(self, robot, session_id):
         self.session_id = session_id
         self.robot = robot
-        self.dialog_name = 'game_dialog'
+        self._dialog_name = 'game_dialog'
         self.dialog = self.robot.session.service('ALDialog')
         self.dialog.openSession(self.session_id)
         self.textToSpeech = self.robot.session.service("ALTextToSpeech")
@@ -30,9 +30,17 @@ class Game():
         self.dialog.loadTopicContent(content)
         self.dialog.activateTopic(name)
 
-        self.dialog.subscribe(self.dialog_name)
+        self.dialog.subscribe(self._dialog_name)
         self.dialog.setFocus(name)
         self.dialog.forceOutput()
+
+    def unload_topic(self, name):
+        try:
+            self.dialog.unsubscribe(self._dialog_name)
+        except:
+            pass
+        self.dialog.deactivateTopic(name)
+        self.dialog.unloadTopic(name)
 
     def start_game(self):
         topic_start = open('./dialog_files/game_start.txt').read()
@@ -45,10 +53,17 @@ class Game():
         while start not in ['0', '1']:
             start = self.read_variable('start')
             time.sleep(1)
-
+        
         if start == '1':
             self.game_started = True
         elif start == '0':
             self.game_started = False
 
+        self.unload_topic(topic_name)
+
         return self.game_started
+    
+    def play(self, selected_object, selected_object_parent):
+        topic_guessing = open("./dialog_files/guessing.txt").read().format(object=selected_object)
+        topic_guessing_name = "play"
+        self._loadTopic(topic_guessing_name, topic_guessing)
