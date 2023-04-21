@@ -18,7 +18,7 @@ class Game():
         self._current_used_variables = []
 
     def __del__(self):
-        self.dialog.closeSession(self.session_id)
+        self.dialog.closeSession()
 
     def read_variable(self, name):
         if name not in self._current_used_variables:
