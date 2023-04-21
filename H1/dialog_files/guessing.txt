@@ -2,11 +2,11 @@ topic: ~play()
 
 language: enu
 
-# u: (can I have a hint) Yes of course. The object I choose is a sub object of: {parent_object}
+# u: (can I have a hint) Yes of course. The object I choose is a sub object of: {object_parent}
 
 u: ({object}) Yes, you guessed rigth. $correct=1
 
-u: (i surrender) Ok, the object I saw was {object}. $gave_up=1
+u: (i surrender) Ok, the object I saw was {object}. $surrendered=1
 
 
 u: (e:Dialog/NotUnderstood) No it's not that object. $correct=0

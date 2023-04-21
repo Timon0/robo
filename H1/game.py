@@ -1,5 +1,5 @@
 import time
-
+from varname import nameof
 
 class Game():
 
@@ -18,6 +18,9 @@ class Game():
         self._current_used_variables = []
 
     def __del__(self):
+        for topic in self.getLoadedTopics('English'):
+            self.unload_topic(topic)
+
         self.dialog.closeSession()
 
     def read_variable(self, name):
@@ -53,17 +56,37 @@ class Game():
         while start not in ['0', '1']:
             start = self.read_variable('start')
             time.sleep(1)
-        
-        if start == '1':
-            self.game_started = True
-        elif start == '0':
-            self.game_started = False
 
+        self.game_started = start == '1'
         self.unload_topic(topic_name)
 
         return self.game_started
     
     def play(self, selected_object, selected_object_parent):
-        topic_guessing = open("./dialog_files/guessing.txt").read().format(object=selected_object)
+        topic_guessing = open("./dialog_files/guessing.txt").read().format(object=selected_object, object_parent=selected_object_parent)
         topic_guessing_name = "play"
         self._loadTopic(topic_guessing_name, topic_guessing)
+
+        correct = 0
+        surrendered = 0
+
+        while correct != '1' and surrendered != '1':
+            correct = self.read_variable(nameof(correct))
+            surrendered = self.read_variable(nameof(surrendered))
+
+        self.unload_topic(topic_guessing_name)
+
+    def play_again(self):
+        topic_name = 'play_again'
+        topic = open('./dialog_files/play_again.txt').read()
+        
+        self.load_topic(topic_name, topic)
+
+        restarted = 0
+        while restarted not in ['0', '1']:
+            restarted = self.read_variable(nameof(restarted))
+            time.sleep(1)
+
+        self.unload_topic(topic_name)
+
+        return restarted == '1'

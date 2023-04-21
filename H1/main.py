@@ -20,9 +20,10 @@ robot.ALTextToSpeech.say("Welcome to the game!")
 #time.sleep(10)
 
 started = game.start_game()
+play_again = False
 
 # take pictures
-if started:
+while started or play_again:
     robot.ALBasicAwareness.stopAwareness()
     robot.ALTextToSpeech.say("Wait a second while I scan the room for some objects.")
     picture_locations = i_see_pictures.take_pictures()
@@ -34,6 +35,8 @@ if started:
 
 
 # todo: want to play again?
+    play_again = game.play_again()
+    started = False
 
     print(picture_locations)
     print(selected_object)

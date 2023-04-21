@@ -1,0 +1,7 @@
+topic: ~start_game()
+
+language: enu
+
+proposal: Do you want to play again?
+   u1: (yes) $restart=1 Alright let's play!
+   u1: (no) $restart=0 Well next time I guess
