@@ -1,7 +1,7 @@
 import time
 
 from ISeePictures import ISeePictures
-from image_recognition.imagerecognition import ImageRecognition
+from image.imagerecognition import ImageRecognition
 from pepper_robots import Robot, PepperConfiguration, PepperNames
 from game import Game
 
