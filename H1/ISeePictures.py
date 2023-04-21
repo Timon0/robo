@@ -19,6 +19,7 @@ class ISeePictures:
 
     def take_pictures(self):
         picture_locations = []
+        time_stamp = time.time()
 
         for head_yaw_angle in self.__head_yaw_angles:
             # move the head into position
@@ -28,7 +29,7 @@ class ISeePictures:
 
             # take a picture
             remote_folder_path = "/opt/aldebaran/www/apps/"
-            file_name = "i_see" + str(head_yaw_angle) + ".jpg"
+            file_name = "i_see_" + str(time_stamp) + "_" + str(head_yaw_angle) + ".jpg"
             self.__camera.take_picture(remote_folder_path, file_name)
 
             # show image on tablet
