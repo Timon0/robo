@@ -15,7 +15,7 @@ class ImageRecognition:
             self.__subscription_key = data['imagerecognition']['subscription_key']
 
     def get_objects(self, image_data):
-        url = self.__endpoint + '/vision/v3.2/detect?model-version' + self.__model_version
+        url = self.__endpoint + '/vision/v3.2/detect?model-version=' + self.__model_version
         headers = {
             'Ocp-Apim-Subscription-Key': self.__subscription_key,
             'Content-Type': 'application/octet-stream'
@@ -60,10 +60,10 @@ class ImageRecognition:
             img_width, img_height = image.size
 
             # [upper left, upper right, lower left, lower right]
-            tiles = [image.crop((0, 0, img_width // 2, img_height // 2)),
-                     image.crop((img_width // 2, 0, img_width, img_height // 2)),
-                     image.crop((0, img_height // 2, img_width // 2, img_height)),
-                     image.crop((img_width // 2, img_height // 2, img_width, img_height))]
+            tiles = [image.crop((0, 0, int(img_width * 0.6), int(img_height * 0.6))),
+                     image.crop((int(img_width * 0.4), 0, img_width, int(img_height * 0.6))),
+                     image.crop((0, int(img_height * 0.4), int(img_width * 0.6), img_height)),
+                     image.crop((int(img_width * 0.4), int(img_height * 0.4), img_width, img_height))]
 
             for i, tile in enumerate(tiles):
                 img_byte_arr = io.BytesIO()
