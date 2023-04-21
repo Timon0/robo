@@ -12,10 +12,7 @@ class Game():
         self.textToSpeech = self.robot.session.service("ALTextToSpeech")
         self.textToSpeech.setLanguage("English")
 
-        self.game_started = False
-
-        self._current_topic_name = None
-        self._current_used_variables = []
+        self._game_started = False
 
     def __del__(self):
         for topic in self.getLoadedTopics('English'):
@@ -24,9 +21,6 @@ class Game():
         self.dialog.closeSession()
 
     def read_variable(self, name):
-        if name not in self._current_used_variables:
-            self._current_used_variables.append(name)
-
         return self.dialog.getUserData(name, self.session_id)
     
     def load_topic(self, name, content):
@@ -57,15 +51,15 @@ class Game():
             start = self.read_variable('start')
             time.sleep(1)
 
-        self.game_started = start == '1'
+        self._game_started = start == '1'
         self.unload_topic(topic_name)
 
-        return self.game_started
+        return self._game_started
     
     def play(self, selected_object, selected_object_parent):
         topic_guessing = open("./dialog_files/guessing.txt").read().format(object=selected_object, object_parent=selected_object_parent)
         topic_guessing_name = "play"
-        self._loadTopic(topic_guessing_name, topic_guessing)
+        self.load_topic(topic_guessing_name, topic_guessing)
 
         correct = 0
         surrendered = 0
