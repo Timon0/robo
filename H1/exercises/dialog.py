@@ -28,16 +28,27 @@ class Dialog:
     def add_simple_reaction(self, topic_name, user_input, robot_output):
         self.topics[topic_name].append({
             'input': user_input,
-            'output': robot_output
+            'output': robot_output,
+            'type': 'simple_reaction'
         })
         self.__al_sr.setVocabulary(user_input.split(), False)
 
-    def load_yes_no_question(self, question, reaction_yes, reaction_no):
+    def load_yes_no_question(self, topic_name, question, reaction_yes, reaction_no):
         # to be implemented
-        pass
+        self.topics[topic_name].append({
+            'question': question,
+            'yes_reaction': reaction_yes,
+            'no_reaction': reaction_no,
+            'type': 'yes_no_question'
+        })
+        self.__al_sr.pause(True)
+        self.__al_sr.setVocabulary(['yes', 'no'], False)
+        self.__al_sr.pause(False)
 
     def ask_yes_no_question(self, topic):
-        pass
+        question_info = self.topics[topic]
+        if question_info[0]['type'] == 'yes_no_question':
+            self.say(question_info[0]['question'])
 
     def add_topic(self, topic_name):
         self.topics[topic_name] = []
@@ -56,5 +67,11 @@ class Dialog:
 
         for topic, array in self.topics.items():
             for input in array:
-                if value[0] == input['input'] and value[1] > 0.35:
-                    self.say(input['output'])
+                if input['type'] == 'simple_reaction':
+                    if value[0] == input['input'] and value[1] > 0.35:
+                        self.say(input['output'])
+                elif input['type'] == 'yes_no_question':
+                    if value[0] == 'yes' and value[1] > 0.35:
+                        self.say(input['yes_reaction'])
+                    elif value[0] == 'no' and value[1] > 0.35:
+                        self.say(input['no_reaction'])
