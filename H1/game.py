@@ -1,6 +1,7 @@
 import time
 from image.imagegeneration import ImageGeneration
 from exercises.file_transfer import FileTransfer
+from exercises.tablet import Tablet
 
 class Game():
 
@@ -93,6 +94,8 @@ class Game():
                 file_transfer = FileTransfer(self.robot)
                 file_transfer.put(local_full_path, remote_full_path)
                 file_transfer.close()
+                tablet = Tablet(self.robot)
+                tablet.show_image(file_name)
             time.sleep(1)
 
         self.unload_topic(topic_guessing_name)
