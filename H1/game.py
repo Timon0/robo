@@ -1,5 +1,4 @@
 import time
-from varname import nameof
 
 class Game():
 
@@ -8,20 +7,28 @@ class Game():
         self.robot = robot
         self._dialog_name = 'game_dialog'
         self.dialog = self.robot.session.service('ALDialog')
+        self.memory = self.robot.session.service('ALMemory')
         self.dialog.openSession(self.session_id)
         self.textToSpeech = self.robot.session.service("ALTextToSpeech")
         self.textToSpeech.setLanguage("English")
 
         self._game_started = False
+        self.reset()
 
     def __del__(self):
-        for topic in self.getLoadedTopics('English'):
+        for topic in self.dialog.getLoadedTopics('English'):
             self.unload_topic(topic)
 
         self.dialog.closeSession()
 
     def read_variable(self, name):
         return self.dialog.getUserData(name, self.session_id)
+
+    def clear_variable(self, name):
+        try:
+            self.memory.removeData(name)
+        except:
+            pass
     
     def load_topic(self, name, content):
         self.dialog.loadTopicContent(content)
@@ -45,7 +52,7 @@ class Game():
 
         self.load_topic(topic_name, topic_start)
 
-        start = 0
+        start = None
 
         while start not in ['0', '1']:
             start = self.read_variable('start')
@@ -65,22 +72,29 @@ class Game():
         surrendered = 0
 
         while correct != '1' and surrendered != '1':
-            correct = self.read_variable(nameof(correct))
-            surrendered = self.read_variable(nameof(surrendered))
+            correct = self.read_variable("correct")
+            surrendered = self.read_variable("surrendered")
 
         self.unload_topic(topic_guessing_name)
 
     def play_again(self):
+        self.reset()
         topic_name = 'play_again'
         topic = open('./dialog_files/play_again.txt').read()
         
         self.load_topic(topic_name, topic)
 
-        restarted = 0
-        while restarted not in ['0', '1']:
-            restarted = self.read_variable(nameof(restarted))
+        restart = 0
+        while restart not in ['0', '1']:
+            restart = self.read_variable("restart")
             time.sleep(1)
 
         self.unload_topic(topic_name)
 
-        return restarted == '1'
+        return restart == '1'
+
+    def reset(self):
+        self.clear_variable("start")
+        self.clear_variable("correct")
+        self.clear_variable("surrendered")
+        self.clear_variable("restart")

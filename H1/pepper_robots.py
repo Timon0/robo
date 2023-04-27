@@ -228,4 +228,4 @@ class Robot(object):
                 self.ALAutonomousLife.setState("disabled")
             self.ALRobotPosture.goToPosture("StandInit", 0.5)
             self.ALTextToSpeech.setLanguage("English")
-            self.ALTextToSpeech.setVolume(0.3)
+            self.ALTextToSpeech.setVolume(0.5)

@@ -15,9 +15,7 @@ game = Game(robot, session_id)
 # person identification
 robot.ALBasicAwareness.startAwareness()
 
-# TODO: Welcome dialog
 robot.ALTextToSpeech.say("Welcome to the game!")
-#time.sleep(10)
 
 started = game.start_game()
 play_again = False
@@ -25,19 +23,18 @@ play_again = False
 # take pictures
 while started or play_again:
     robot.ALBasicAwareness.stopAwareness()
+    time.sleep(1)
     robot.ALTextToSpeech.say("Wait a second while I scan the room for some objects.")
     picture_locations = i_see_pictures.take_pictures()
     selected_object, selected_object_parent = image_recognition.get_object_from_selection(picture_locations)
+    print(selected_object, selected_object_parent)
 
-# todo: guessing dialog
+    robot.ALBasicAwareness.startAwareness()
+    robot.ALTextToSpeech.say("I found an object. Let's start guessing!")
+
+    # guessing dialog
     game.play(selected_object, selected_object_parent)
-# todo: maybe add hint if parent of object is available
 
-
-# todo: want to play again?
+    # want to play again?
     play_again = game.play_again()
     started = False
-
-    print(picture_locations)
-    print(selected_object)
-    print(selected_object_parent)
