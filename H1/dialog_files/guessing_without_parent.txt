@@ -1,0 +1,13 @@
+topic: ~play()
+
+language: enu
+
+u: (hint) Yes of course. You can see the first letter of the word on my screen $hint=1
+u: (help me) Yes of course. You can see the first letter of the word on my screen $hint=1
+
+u: ({object}) Yes, you guessed right. $correct=1
+
+u: (i surrender) Ok, the object I saw was {object}. $surrendered=1
+
+
+u: (e:Dialog/NotUnderstood) No it's not that object. $correct=0

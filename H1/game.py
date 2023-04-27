@@ -1,4 +1,6 @@
 import time
+from image.imagegeneration import ImageGeneration
+from exercises.file_transfer import FileTransfer
 
 class Game():
 
@@ -11,6 +13,9 @@ class Game():
         self.dialog.openSession(self.session_id)
         self.textToSpeech = self.robot.session.service("ALTextToSpeech")
         self.textToSpeech.setLanguage("English")
+        self.image_generation = ImageGeneration()
+        self.local_folder_path = "C:\\Users\\timon\\Documents\\hslu\\06\\ROBO\\Pepper\\"
+        self.remote_folder_path = "/opt/aldebaran/www/apps/"
 
         self._game_started = False
         self.reset()
@@ -64,7 +69,11 @@ class Game():
         return self._game_started
     
     def play(self, selected_object, selected_object_parent):
-        topic_guessing = open("./dialog_files/guessing.txt").read().format(object=selected_object, object_parent=selected_object_parent)
+        if selected_object_parent is None:
+            topic_guessing = open("./dialog_files/guessing_without_parent.txt").read()
+        else:
+            topic_guessing = open("./dialog_files/guessing.txt").read().format(object=selected_object,
+                                                                               object_parent=selected_object_parent)
         topic_guessing_name = "play"
         self.load_topic(topic_guessing_name, topic_guessing)
 
@@ -74,6 +83,17 @@ class Game():
         while correct != '1' and surrendered != '1':
             correct = self.read_variable("correct")
             surrendered = self.read_variable("surrendered")
+            hint = self.read_variable("hint")
+            if hint == '1':
+                file_name = "hint.png"
+                local_full_path = self.local_folder_path + file_name
+                remote_full_path = self.remote_folder_path + file_name
+                img_hint = self.image_generation.get_image_for_text(selected_object[0])
+                img_hint.save(local_full_path)
+                file_transfer = FileTransfer(self.robot)
+                file_transfer.put(local_full_path, remote_full_path)
+                file_transfer.close()
+            time.sleep(1)
 
         self.unload_topic(topic_guessing_name)
 
@@ -98,3 +118,7 @@ class Game():
         self.clear_variable("correct")
         self.clear_variable("surrendered")
         self.clear_variable("restart")
+        self.clear_variable("hint")
+        file_transfer = FileTransfer(self.robot)
+        file_transfer.remove(self.remote_folder_path + 'hint.png')
+        file_transfer.close()

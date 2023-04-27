@@ -15,5 +15,15 @@ class FileTransfer():
         sftp.remove(remote)
         sftp.close()
 
+    def put(self, local, remote):
+        sftp = self.ssh.open_sftp()
+        sftp.put(local, remote)
+        sftp.close()
+
+    def remove(self, path):
+        sftp = self.ssh.open_sftp()
+        sftp.remove(path)
+        sftp.close()
+
     def close(self):
         self.ssh.close()
