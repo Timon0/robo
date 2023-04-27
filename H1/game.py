@@ -119,6 +119,9 @@ class Game():
         self.clear_variable("surrendered")
         self.clear_variable("restart")
         self.clear_variable("hint")
-        file_transfer = FileTransfer(self.robot)
-        file_transfer.remove(self.remote_folder_path + 'hint.png')
-        file_transfer.close()
+        try:
+            file_transfer = FileTransfer(self.robot)
+            file_transfer.remove(self.remote_folder_path + 'hint.png')
+            file_transfer.close()
+        except:
+            pass
