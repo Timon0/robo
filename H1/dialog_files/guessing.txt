@@ -2,7 +2,7 @@ topic: ~play()
 
 language: enu
 
-u: (hint) Yes of course. The object I choose is a sub object of: {object_parent}
+u: (hint) Yes of course. The object I choose is a kind of: {object_parent}
 u: (help me) Yes of course. The object I choose is a sub object of: {object_parent}
 
 u: ({object}) Yes, you guessed right. $correct=1

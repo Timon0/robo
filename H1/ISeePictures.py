@@ -10,7 +10,7 @@ from exercises.tablet import Tablet
 class ISeePictures:
 
     __show_images_on_tablet = False
-    __local_folder_path = "C:\\Users\\timon\\Documents\\hslu\\06\\ROBO\\Pepper\\"
+    __local_folder_path = "C:\\Users\\timon\\Documents\\hslu\\06\\ROBO\\Pepper\\pictures"
     __head_yaw_angles = [-60, 0, 60]
 
     def __init__(self, robot):
@@ -29,7 +29,7 @@ class ISeePictures:
 
             # take a picture
             remote_folder_path = "/opt/aldebaran/www/apps/"
-            file_name = "i_see_" + str(time_stamp) + "_" + str(head_yaw_angle) + ".jpg"
+            file_name = str(time_stamp) + "_i_see_" + str(head_yaw_angle) + ".jpg"
             self.__camera.take_picture(remote_folder_path, file_name)
 
             # show image on tablet
