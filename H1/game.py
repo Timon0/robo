@@ -11,6 +11,7 @@ class Game():
         self._dialog_name = 'game_dialog'
         self.dialog = self.robot.session.service('ALDialog')
         self.memory = self.robot.session.service('ALMemory')
+        self.tablet = Tablet(self.robot)
         self.dialog.openSession(self.session_id)
         self.textToSpeech = self.robot.session.service("ALTextToSpeech")
         self.textToSpeech.setLanguage("English")
@@ -71,7 +72,7 @@ class Game():
     
     def play(self, selected_object, selected_object_parent):
         if selected_object_parent is None:
-            topic_guessing = open("./dialog_files/guessing_without_parent.txt").read()
+            topic_guessing = open("./dialog_files/guessing_without_parent.txt").read().format(object=selected_object)
         else:
             topic_guessing = open("./dialog_files/guessing.txt").read().format(object=selected_object,
                                                                                object_parent=selected_object_parent)
@@ -89,13 +90,12 @@ class Game():
                 file_name = "hint.png"
                 local_full_path = self.local_folder_path + file_name
                 remote_full_path = self.remote_folder_path + file_name
-                img_hint = self.image_generation.get_image_for_text(selected_object[0])
+                img_hint = self.image_generation.get_image_for_text(selected_object[0].upper())
                 img_hint.save(local_full_path)
                 file_transfer = FileTransfer(self.robot)
                 file_transfer.put(local_full_path, remote_full_path)
                 file_transfer.close()
-                tablet = Tablet(self.robot)
-                tablet.show_image(file_name)
+                self.tablet.show_image(file_name)
             time.sleep(1)
 
         self.unload_topic(topic_guessing_name)
@@ -128,3 +128,5 @@ class Game():
             file_transfer.close()
         except:
             pass
+
+        self.tablet.hide_image()

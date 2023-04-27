@@ -175,7 +175,7 @@ class ALAudioPlayer(object):
         """
         if not self.proxy:
             self.proxy = self.session.service("ALAudioPlayer")
-        return self.proxy.play(id)
+        return self.proxy.play(id, _async=True)
 
     def play2(self, id, volume, pan):
         """Starts the playback of a file preloaded with the loadFile function, with specific volume and audio balance
