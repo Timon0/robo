@@ -1,6 +1,5 @@
-from pepper_robots import Robot, PepperConfiguration, PepperNames
 from camera import Camera
-from file_transfer import FileTransfer
+from pepper_robots import Robot, PepperConfiguration, PepperNames
 
 config = PepperConfiguration(PepperNames.Amber)
 robot = Robot(config)

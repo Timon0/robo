@@ -23,7 +23,6 @@ tablet = Tablet(robot)
 tablet.show_image(file_name)
 time.sleep(5)
 tablet.hide_image()
-tablet.close()
 
 # copy to local filesystem
 local = "C:\\Users\\timon\\Documents\\hslu\\06\\ROBO\\Pepper\\" + file_name
