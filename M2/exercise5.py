@@ -11,8 +11,8 @@ prev_errors = [0,0,0,0,0,0,0,0,0,0]
 current_pos = 0
 
 c_p = 35
-c_d = 5
-c_i = 15
+c_d = 10
+c_i = 20
 
 def drive_straigth(speed):
     global motor_left_target, motor_right_target
@@ -56,7 +56,7 @@ def prox():
         print(len(prev_errors))
         for i in range(len(prev_errors)):
             summe += prev_errors[i]
-            print(prev_errors[i])
+            
         error_sum = summe // prev_error_size
         
         P = (c_p * (error)) // 100

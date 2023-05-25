@@ -44,20 +44,20 @@ def prox():
                 pass
                 #drive_straigth(0)
             elif last_direction == 1:
-                motor_right_target = 75
-                motor_left_target = 300
+                motor_right_target = 50
+                motor_left_target = 325
             elif last_direction == 2:
-                motor_right_target = 300
-                motor_left_target = 75
+                motor_right_target = 325
+                motor_left_target = 50
         elif p_left > mid:
             line_found = True
-            motor_right_target = 100
-            motor_left_target = 200
+            motor_right_target = 50
+            motor_left_target = 250
             last_direction = 1
         elif p_right > mid:
             line_found = True
-            motor_left_target = 100
-            motor_right_target = 200
+            motor_left_target = 50
+            motor_right_target = 250
             last_direction = 2
         else:
             line_found = True
